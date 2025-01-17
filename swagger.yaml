@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Credit Service API
+  description: API pour gérer le solde des crédits et l'historique des transactions pour Manamon.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Serveur local
+
+paths:
+  /credit/{userId}:
+    get:
+      summary: Obtenir le solde de crédits d'un utilisateur
+      description: Retourne le solde de crédits pour un utilisateur spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Identifiant de l'utilisateur
+          schema:
+            type: string
+      responses:
+        200:
+          description: Solde de crédits récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    example: "12345"
+                  balance:
+                    type: number
+                    format: float
+                    example: 150.5
+        404:
+          description: Utilisateur non trouvé
+
+  /credit/update:
+    post:
+      summary: Mettre à jour le solde après une transaction
+      description: Met à jour le solde de crédits d'un utilisateur après une transaction (achat, gain de match, vente).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "12345"
+                transactionType:
+                  type: string
+                  enum: [purchase, win, sale]
+                  example: "purchase"
+                amount:
+                  type: number
+                  format: float
+                  example: 50.0
+      responses:
+        200:
+          description: Solde mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    example: "12345"
+                  newBalance:
+                    type: number
+                    format: float
+                    example: 100.5
+        400:
+          description: Requête invalide
+
+  /credit/{userId}/transactions:
+    get:
+      summary: Récupérer l'historique des transactions
+      description: Retourne l'historique complet des transactions pour un utilisateur spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Identifiant de l'utilisateur
+          schema:
+            type: string
+      responses:
+        200:
+          description: Historique des transactions récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    transactionId:
+                      type: string
+                      example: "txn-001"
+                    date:
+                      type: string
+                      format: date-time
+                      example: "2025-01-17T12:34:56Z"
+                    transactionType:
+                      type: string
+                      enum: [purchase, win, sale]
+                      example: "purchase"
+                    amount:
+                      type: number
+                      format: float
+                      example: 50.0
+        404:
+          description: Utilisateur non trouvé
