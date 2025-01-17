@@ -1,22 +1,54 @@
-# Credit
+# Credit Service
 
-Service de crédit pour **Manamon**.
+This is the Credit Service for **Manamon**. It provides functionalities to manage user credit balances and transaction histories.
 
-## Ressources gérées
-- **Solde de crédits des utilisateurs**  
-- **Historique des transactions financières liées aux crédits**
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Technologies](#technologies)
 
-## Technologies
-- **Java avec Spring Boot**
-- **Stockage : PostgreSQL**
-- **Envoi des statistiques via un bus de messages : RabbitMQ**
+## Installation
 
-## Principales fonctionnalités API
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```
+   cd credit-service
+   ```
+3. Install the dependencies:
+   ```
+   npm install
+   ```
+
+## Usage
+
+To start the application, run:
+```
+npm start
+```
+The application will be available at `http://localhost:8080`.
+
+## API Endpoints
+
 - **GET /credit/{userId}**  
-  Obtenir le solde de crédits d’un utilisateur.
+  Retrieve the credit balance for a specific user.
 
 - **POST /credit/update**  
-  Mettre à jour le solde après une transaction (achat, gain de match, vente).
+  Update the credit balance after a transaction (purchase, match winnings, sale).
 
 - **GET /credit/{userId}/transactions**  
-  Récupérer l’historique complet des transactions pour un utilisateur.
+  Retrieve the complete transaction history for a user.
+
+## Technologies
+
+- **TypeScript**
+- **Express**
+- **PostgreSQL**
+- **RabbitMQ** for message bus statistics
+
+## License
+
+This project is licensed under the MIT License.
