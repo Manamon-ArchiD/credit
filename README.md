@@ -1,2 +1,2 @@
 # credit
-credit serviec
+Service de crédit pour Manamon
