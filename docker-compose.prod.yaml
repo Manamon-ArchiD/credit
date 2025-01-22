@@ -10,7 +10,8 @@ services:
       - credit-network
 
   credit:
-    build: .
+    build:
+      target: prod
     environment:
       - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
     ports:
@@ -19,15 +20,6 @@ services:
       - mongodb
     networks:
       - credit-network
-    develop:
-      watch:
-        - action: sync
-          path: src
-          target: /app/src
-          ignore:
-            - node_modules
-        - action: rebuild
-          path: package.json
 
 volumes:
   dbdata6:
