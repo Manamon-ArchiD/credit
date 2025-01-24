@@ -19,7 +19,7 @@ class IndexController {
     private computeUserBalance(transactions: Transaction[]) {
         let balance = 0
         for(let transaction of transactions) {
-            balance += transaction.amount
+            balance += (transaction.transactionType === 'purchase' ? -1 : 1) * transaction.amount
         }
         return balance
     }
