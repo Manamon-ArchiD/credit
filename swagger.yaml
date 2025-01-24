@@ -5,7 +5,9 @@ info:
   version: 1.0.0
 servers:
   - url: http://credit:8080
-    description: Serveur de crédit
+    description: Serveur de production
+  - url: http://localhost:8080
+    description: Serveur de développement
 
 paths:
   /credit/{userId}:
