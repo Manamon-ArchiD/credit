@@ -25,10 +25,14 @@ class IndexController {
     }
 
     async getTransactionHistory(req: Request, res: Response) {
-        const userId = req.params.userId;
-        const userTransactions = transactions.filter(transaction => transaction.userId === userId);
+        try {
+            const userId = req.params.userId;
+            const userTransactions = transactions.filter(transaction => transaction.userId === userId);
 
-        res.status(200).json(userTransactions);
+            res.status(200).json(userTransactions);
+        } catch (error) {
+            res.status(500).json({ message: 'Une erreur est survenue' });
+        }
     }
 }
 
