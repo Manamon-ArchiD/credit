@@ -93,6 +93,16 @@ paths:
                     type: number
                     format: float
                     example: 120.0
+        400:
+          description: Type de transaction incorrecte
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: "Type de transaction incorrecte: <Type reçu>"
         500:
           description: Erreur interne du serveur
           content:

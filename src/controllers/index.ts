@@ -44,6 +44,10 @@ class IndexController {
     }
 
     async updateCreditBalance(req: Request, res: Response) {
+        if(!['gain', 'purchase', 'sale'].includes(req.body.transactionType)) {
+            res.status(400).json({ message: `Type de transaction incorrecte : '${req.body.transactionType}'` })
+            return
+        }
         try {
             const persistence = new TransactionPersistence(Database.get())
             const transaction: Transaction = {
