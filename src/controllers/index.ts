@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import UserPersistance from "../persistance/TransactionPersistance";
-import { Database } from "../persistance/Database";
+import { Database } from "../persistence/Database";
 import Transaction from "../model/Transaction";
+import TransactionPersistence from "../persistence/TransactionPersistence";
 
 const transactions = [
     {
@@ -38,7 +38,9 @@ class IndexController {
     async getTransactionHistory(req: Request, res: Response) {
         try {
             const userId = req.params.userId;
-            const userTransactions = transactions.filter(transaction => transaction.userId === userId);
+            const db = Database.get();
+            const transactionPersistence = new TransactionPersistence(db);
+            const userTransactions = await transactionPersistence.getByUser(userId);
 
             res.status(200).json(userTransactions);
         } catch (error) {
