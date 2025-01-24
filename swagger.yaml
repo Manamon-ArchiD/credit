@@ -36,6 +36,16 @@ paths:
                     type: number
                     format: float
                     example: 100.0
+        404:
+          description: Utilisateur non trouvé ou solde de crédit non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Joueur non trouvé ou transactions non existantes"
         500:
           description: Erreur interne du serveur
           content:
