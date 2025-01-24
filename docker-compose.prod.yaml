@@ -1,7 +1,7 @@
 services:
 
   mongodb:
-    image: mongo:6-jammy
+    build: database
     ports:
       - '27017:27017'
     volumes:
@@ -12,8 +12,11 @@ services:
   credit:
     build:
       target: prod
-    environment:
+    environment:  # TODO?
+      - PORT=8080
       - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
+      - DB_NAME="creditDB"
+      - DB_COLLECTION_NAME="credit"
     ports:
       - '8080:8080'
     depends_on:
