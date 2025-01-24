@@ -91,8 +91,8 @@ paths:
                   type: object
                   properties:
                     message:
-                    type: string
-                    example: "Type de transaction incorrecte: <Type reçu>"
+                      type: string
+                      example: "Type de transaction incorrecte: <Type reçu>"
         500:
           description: Erreur interne du serveur
           content:
