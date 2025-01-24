@@ -32,7 +32,7 @@ class IndexController {
 
     async updateCreditBalance(req: Request, res: Response) {
         try {
-            const persistence = new TransactionPersistance(Database.get())
+            const persistence = new TransactionPersistence(Database.get())
             const transaction: Transaction = {
                 ...req.body,
                 date: Date.now().toString()
