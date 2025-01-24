@@ -4,8 +4,8 @@ info:
   description: API pour gérer le solde des crédits et l'historique des transactions pour Manamon.
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
-    description: Serveur local
+  - url: http://credit:8080
+    description: Serveur de crédit
 
 paths:
   /credit/{userId}:
@@ -33,14 +33,21 @@ paths:
                   balance:
                     type: number
                     format: float
-                    example: 150.5
-        404:
-          description: Utilisateur non trouvé
+                    example: 100.0
+        500:
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Une erreur est survenue"
 
   /credit/update:
     post:
-      summary: Mettre à jour le solde après une transaction
-      description: Met à jour le solde de crédits d'un utilisateur après une transaction (achat, gain de match, vente).
+      summary: Mettre à jour le solde de crédit
       requestBody:
         required: true
         content:
@@ -53,7 +60,7 @@ paths:
                   example: "12345"
                 transactionType:
                   type: string
-                  enum: [purchase, win, sale]
+                  enum: [purchase, gain, sale]
                   example: "purchase"
                 amount:
                   type: number
@@ -61,7 +68,7 @@ paths:
                   example: 50.0
       responses:
         200:
-          description: Solde mis à jour avec succès
+          description: Solde de crédit mis à jour avec succès
           content:
             application/json:
               schema:
@@ -73,9 +80,17 @@ paths:
                   newBalance:
                     type: number
                     format: float
-                    example: 100.5
-        400:
-          description: Requête invalide
+                    example: 120.0
+        500:
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Une erreur est survenue"
 
   /credit/{userId}/transactions:
     get:
@@ -107,11 +122,19 @@ paths:
                       example: "2025-01-17T12:34:56Z"
                     transactionType:
                       type: string
-                      enum: [purchase, win, sale]
+                      enum: [purchase, gain, sale]
                       example: "purchase"
                     amount:
                       type: number
                       format: float
                       example: 50.0
-        404:
-          description: Utilisateur non trouvé
+        500:
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Une erreur est survenue"
