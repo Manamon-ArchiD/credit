@@ -26,7 +26,7 @@ export default class TransactionPersistance
         const filters = {userId: userId}
         try {
             await Database.connect()
-            const transactions = this.collection.find(filters).toArray()
+            const transactions = await this.collection.find(filters).toArray()
 
             return transactions
         }
