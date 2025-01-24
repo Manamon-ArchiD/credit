@@ -16,7 +16,7 @@ const transactions = [
 
 class IndexController {
 
-    private async computeUserBalance(transactions: Transaction[]) {
+    private computeUserBalance(transactions: Transaction[]) {
         let balance = 0
         for(let transaction of transactions) {
             balance += transaction.amount
@@ -31,8 +31,24 @@ class IndexController {
     }
 
     async updateCreditBalance(req: Request, res: Response) {
-        // Logic to update credit balance for the user
-        res.status(200).json({ userId: req.body.userId, newBalance: 120.0 }); // Example response
+        try {
+            const persistence = new TransactionPersistence(Database.get())
+            const transaction: Transaction = {
+                ...req.body,
+                date: Date.now().toString()
+            }
+            await persistence.insert(transaction)
+
+            // compute new balance
+            const transactions = await persistence.getByUser(transaction.userId)
+            const newBalance = this.computeUserBalance(transactions)
+
+            res.status(200).json({ userId: transaction.userId, newBalance: newBalance})
+        }
+        catch(err) {
+            console.error(err)
+            res.status(500).json({ message: 'Une erreur est survenue' })
+        }
     }
 
     async getTransactionHistory(req: Request, res: Response) {
