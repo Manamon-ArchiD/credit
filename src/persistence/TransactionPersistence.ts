@@ -2,14 +2,14 @@ import { Collection, Db, ObjectId } from "mongodb";
 import { Database } from "./Database";
 import Transaction from "../model/Transaction";
 
-export default class TransactionPersistance
+export default class TransactionPersistence
 {
     private static COLLECTION_NAME = "transaction"
 
     private collection: Collection<Transaction>
 
     public constructor(db: Db) {
-        this.collection = db.collection<Transaction>(TransactionPersistance.COLLECTION_NAME)
+        this.collection = db.collection<Transaction>(TransactionPersistence.COLLECTION_NAME)
     }
 
     public async insert(transaction: Transaction) {
