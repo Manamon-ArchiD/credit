@@ -1,4 +1,7 @@
 import { Request, Response } from "express";
+import UserPersistance from "../persistance/TransactionPersistance";
+import { Database } from "../persistance/Database";
+import Transaction from "../model/Transaction";
 
 const transactions = [
     {
@@ -12,6 +15,15 @@ const transactions = [
   ];
 
 class IndexController {
+
+    private async computeUserBalance(transactions: Transaction[]) {
+        let balance = 0
+        for(let transaction of transactions) {
+            balance += transaction.amount
+        }
+        return balance
+    }
+
     async getCreditBalance(req: Request, res: Response) {
         const userId = req.params.userId;
         // Logic to retrieve credit balance for the user
@@ -19,9 +31,8 @@ class IndexController {
     }
 
     async updateCreditBalance(req: Request, res: Response) {
-        const { userId, amount } = req.body;
         // Logic to update credit balance for the user
-        res.status(200).json({ userId, newBalance: 120.0 }); // Example response
+        res.status(200).json({ req.body.userId, newBalance: 120.0 }); // Example response
     }
 
     async getTransactionHistory(req: Request, res: Response) {
