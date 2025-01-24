@@ -32,7 +32,7 @@ class IndexController {
 
     async updateCreditBalance(req: Request, res: Response) {
         // Logic to update credit balance for the user
-        res.status(200).json({ req.body.userId, newBalance: 120.0 }); // Example response
+        res.status(200).json({ userId: req.body.userId, newBalance: 120.0 }); // Example response
     }
 
     async getTransactionHistory(req: Request, res: Response) {
