@@ -1,5 +1,5 @@
 export default interface Transaction {
-    transactionId: string
+    _id: string
     userId: string
 
     date: string
