@@ -16,7 +16,7 @@ This is the Credit Service for **Manamon**. It provides functionalities to manag
    ```
 2. Navigate to the project directory:
    ```
-   cd credit-service
+   cd credit
    ```
 3. Install the dependencies:
    ```
@@ -46,7 +46,7 @@ The application will be available at `http://localhost:8080`.
 
 - **TypeScript**
 - **Express**
-- **PostgreSQL**
+- **MongoDB**
 - **RabbitMQ** for message bus statistics
 
 ## License

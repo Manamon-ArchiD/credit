@@ -1,0 +1,29 @@
+services:
+
+  mongodb:
+    extends:
+      file: docker-compose.prod.yaml
+      service: mongodb
+
+  credit-dev:
+    extends: 
+      file: docker-compose.prod.yaml
+      service: credit
+    build: 
+      target: dev
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /credit
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: package.json
+
+volumes:
+  dbdata6:
+
+networks:
+  credit-network:
+    driver: bridge
