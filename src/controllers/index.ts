@@ -25,9 +25,22 @@ class IndexController {
     }
 
     async getCreditBalance(req: Request, res: Response) {
-        const userId = req.params.userId;
-        // Logic to retrieve credit balance for the user
-        res.json({ userId, balance: 100.0 }); // Example response
+        try {
+            const userId = req.params.userId;
+            const db = Database.get();
+            const transactionPersistence = new TransactionPersistence(db);
+            const transactions = await transactionPersistence.getByUser(userId);
+
+            if (transactions.length > 0) {
+                const balance = this.computeUserBalance(transactions);
+                res.status(200).json({ userId, balance });
+            } else {
+                res.status(404).json({ message: 'Joueur non trouvé ou transactions non existantes' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Une erreur est survenue' });
+        }
     }
 
     async updateCreditBalance(req: Request, res: Response) {
